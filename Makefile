@@ -7,6 +7,7 @@ TEST_FILE_PATH=__tests__/$(PROBLEM)/$(FILE).test.js
 file:
 	@[ -n "$(PROBLEM)" ] || { echo 'PROBLEM が指定されていません'; exit 1; }
 	@mkdir -p src/$(PROBLEM) && cp templates/main.js $(FILE_PATH)
+	@[ "$(FILE)" = 'main' ] || sed -i -e "s/main/$(FILE)/g" $(FILE_PATH)
 
 run:
 	@[ -n "$(PROBLEM)" ] || { echo 'PROBLEM が指定されていません'; exit 1; }
@@ -23,6 +24,7 @@ fmt:
 test-file:
 	@[ -n "$(PROBLEM)" ] || { echo 'PROBLEM が指定されていません'; exit 1; }
 	@mkdir -p __tests__/$(PROBLEM) && cp templates/main.test.js $(TEST_FILE_PATH)
+	@[ "$(FILE)" = 'main' ] || sed -i -e "s|./main|$(PWD)/src/$(PROBLEM)/$(FILE)|g" $(TEST_FILE_PATH)
 
 test:
 	@[ -n "$(PROBLEM)" ] || { echo 'PROBLEM が指定されていません'; exit 1; }
